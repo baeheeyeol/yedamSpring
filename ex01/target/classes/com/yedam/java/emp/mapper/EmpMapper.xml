@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.java.emp.mapper.EmpMapper">
+	<select id="getEmpList" resultType="EmpVO">
+		select * from employees
+		<where>
+		<if test = "departmentId !=null">
+		department_id =#{departmentId} AND
+		</if>
+		job_id=#{jobId} AND
+		</where>
+	</select>
+	
+	<select id="getEmp" parameterType="EmpVO" resultType="EmpVO">
+		select employee_id,
+		first_name,
+		last_name,
+		<if test="!employeeId.equals('100')">
+		email,
+		</if>
+		hire_date,
+		job_id,
+		salary
+		from employees
+		where employee_id = #{employeeId}
+	</select>
+	<insert id="insertEmp" parameterType="EmpVO">
+		<!-- insert,update -->
+		<selectKey keyProperty="employeeId" order="BEFORE"
+			resultType="String">
+			SELECT MAX(employee_id)+1 FROM employees
+		</selectKey>
+		insert into employees
+		(employee_id,first_name,last_name,email,hire_date,job_id,salary)
+		values (#{employeeId},#{firstName},#{lastName},#{email}, sysdate
+		,#{jobId},#{salary})
+	</insert>
+	<!--parameterType 생략가능 권장x -->
+	<update id="updateSalary" parameterType="Integer">
+		update employees
+		set salary =salary *1.1
+		where employee_id = #{empId}
+	</update>
+
+	<delete id="deleteEmp" parameterType="EmpVO">
+		delete from employee where employee_id=#{employeeId})
+	</delete>
+
+	<update id="updateEmp" parameterType="EmpVO">
+		update employees
+		set last_name= #{lastName},
+		first_name= #{firstName},
+		email = #{email}
+		where employee_id =#{employeeId}
+	</update>
+	<update id="updateEmpTest" parameterType="EmpVO">
+		update employees
+		<!-- if를 사용하는곳 -->
+			<set>
+			<if test="firstName !=null">
+				first_name =#{firstName},
+			</if>
+			<if test="lastName !=null">
+				last_name =#{lastName},
+			</if>
+			<if test="email !=null">
+				email=#{email}
+			</if>
+		</set>
+		where employee_id = #{employeeId}
+	</update>
+
+
+</mapper>
