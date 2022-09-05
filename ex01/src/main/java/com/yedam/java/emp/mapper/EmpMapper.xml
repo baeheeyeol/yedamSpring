@@ -9,23 +9,17 @@
 		<if test = "departmentId !=null">
 		department_id =#{departmentId} AND
 		</if>
-		job_id=#{jobId} AND
 		</where>
 	</select>
 	
 	<select id="getEmp" parameterType="EmpVO" resultType="EmpVO">
-		select employee_id,
-		first_name,
-		last_name,
-		<if test="!employeeId.equals('100')">
-		email,
-		</if>
-		hire_date,
-		job_id,
-		salary
+		select *
 		from employees
 		where employee_id = #{employeeId}
 	</select>
+		<select id="getMaxEmployeeId" resultType="Integer">
+			SELECT MAX(employee_id)+1 as employee_id FROM employees
+		</select>
 	<insert id="insertEmp" parameterType="EmpVO">
 		<!-- insert,update -->
 		<selectKey keyProperty="employeeId" order="BEFORE"
@@ -44,8 +38,8 @@
 		where employee_id = #{empId}
 	</update>
 
-	<delete id="deleteEmp" parameterType="EmpVO">
-		delete from employee where employee_id=#{employeeId})
+	<delete id="deleteEmp" parameterType="Integer">
+		delete from employees where employee_id=#{employeeId}
 	</delete>
 
 	<update id="updateEmp" parameterType="EmpVO">

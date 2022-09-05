@@ -14,13 +14,14 @@ public interface EmpMapper {
 	//둥록
 	public int insertEmp(EmpVO empVO);
 	//삭제
-	public int deleteEmp(EmpVO empVO);
+	public int deleteEmp(int employeeId);
 	//수정 : 연봉 10%인상
 	public int updateSalary(@Param("empId")int employeeId);
 	//수정 : 사원정보를 넘겨받아서 이름과 성, 이메일을 수정할 수 있는 메소드
 	public int updateEmp(EmpVO empVO);
+	
 	public int updateEmpTest(EmpVO empVO);
 	
-	
+	public EmpVO getMaxEmployeeId();
 
 }
