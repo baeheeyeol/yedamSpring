@@ -49,4 +49,15 @@ public class EmpController {
 		empService.deleteEmp(empVO);
 		return "redirect:/emp/allList";
 	}
+	
+	@GetMapping("/insertForm")
+	public String insertEmp() {
+		return "emp/empInsert";
+	}
+	
+	@PostMapping("/insertInfo")
+	public String insertEmpInfo(EmpVO empVO) {
+		empService.insertEmp(empVO);
+		return "redirect:allList";
+	}
 }

@@ -12,7 +12,7 @@
 	border :1px solid black}
 </style>
 <body>
-<button type="button" onclick="location.href='java/emp/insertInfo'">등록</button>
+<button type="button" onclick="location.href='insertForm'">등록</button>
 	<table>
 		<thead>
 			<tr>
